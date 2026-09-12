@@ -16,6 +16,7 @@ const list = document.querySelector('#todo-list');
 const taskCount = document.querySelector('#task-count');
 const clearCompletedBtn = document.querySelector('#clear-completed');
 const filterButtons = document.querySelectorAll('.filter');
+const navLinks = document.querySelectorAll('.nav-links a');
 
 function loadTasks() {
   try {
@@ -139,6 +140,16 @@ function clearCompleted() {
   renderTasks();
 }
 
+function updateFilterUI() {
+  filterButtons.forEach((filterButton) => {
+    filterButton.classList.toggle('active', filterButton.dataset.filter === state.filter);
+  });
+
+  navLinks.forEach((navLink) => {
+    navLink.classList.toggle('active', navLink.dataset.filter === state.filter);
+  });
+}
+
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   addTask(input.value);
@@ -178,13 +189,19 @@ clearCompletedBtn.addEventListener('click', clearCompleted);
 filterButtons.forEach((button) => {
   button.addEventListener('click', () => {
     state.filter = button.dataset.filter;
-
-    filterButtons.forEach((filterButton) => {
-      filterButton.classList.toggle('active', filterButton === button);
-    });
-
+    updateFilterUI();
     renderTasks();
   });
 });
 
+navLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    state.filter = link.dataset.filter;
+    updateFilterUI();
+    renderTasks();
+  });
+});
+
+updateFilterUI();
 renderTasks();
