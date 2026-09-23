@@ -1,4 +1,4 @@
-# To-Do List Application
+# To-Do List App
 
 A simple browser-based to-do list app built with HTML, CSS, and JavaScript.
 
